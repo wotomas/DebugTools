@@ -1,5 +1,8 @@
 package com.example.jimmy.debugtools;
 
+import android.content.ContentValues;
+import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.StringRes;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
@@ -10,11 +13,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.jimmy.debugtools.database.GitHubContract;
 import com.example.jimmy.debugtools.network.GitHubService;
 import com.example.jimmy.debugtools.network.Repo;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -60,5 +65,39 @@ public class MainActivity extends AppCompatActivity {
         });
       }
     });
+
+    createDatabaseButton.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        SQLiteDatabase db = DebugApplication.getDbHelper().getWritableDatabase();
+        for(int i = 0; i < 40; i++) {
+          ContentValues values = new ContentValues();
+          values.put(GitHubContract.GitHubEntry.COLUMN_NAME_NAME, getRandomName());
+          db.insert(GitHubContract.GitHubEntry.TABLE_NAME, null, values);
+        }
+        Log.d(TAG, "Database entry creation was successful!");
+        Toast.makeText(getBaseContext(), "Database entry creation was successful", Toast.LENGTH_LONG).show();
+        db.close();
+      }
+    });
+
+    createSharedPrefButton.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        SharedPreferences sharedPreferences = DebugApplication.getSharedPref();
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        for(int i = 0; i < 40; i++) {
+          editor.putString("" + i, getRandomName());
+        }
+        editor.apply();
+        Log.d(TAG, "SharedPref creation was successful!");
+        Toast.makeText(getBaseContext(), "SharedPref creation was successful", Toast.LENGTH_LONG).show();
+      }
+    });
+
+  }
+
+  private String getRandomName() {
+    return UUID.randomUUID().toString();
   }
 }
