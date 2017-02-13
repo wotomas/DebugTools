@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="12dp"
+    android:columnCount="2"
+    tools:ignore="UselessParent">
+    <TextView
+        android:layout_columnSpan="2"
+        android:layout_width="0dp"
+        android:layout_gravity="start|fill_horizontal"
+        android:text="Focus Finder"
+        style="@style/Widget.DebugDrawer.Base.Header"
+        tools:textColor="@color/colorPrimaryDark"
+        />
+
+    <TextView
+        android:layout_gravity="start|center_vertical"
+        android:text="Find Current Focus"
+        style="@style/Widget.DebugDrawer.Base.RowTitle"
+        tools:textColor="@color/colorPrimaryDark"
+        />
+    <Button
+        android:id="@+id/dd_debug_focus_find"
+        android:layout_width="wrap_content"
+        android:layout_gravity="end|center_vertical"
+        android:text="Search"
+        style="@style/Widget.DebugDrawer.Base.RowValue"
+        android:textColor="@color/colorPrimaryDark"
+        />
+
+</GridLayout>

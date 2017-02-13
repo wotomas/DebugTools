@@ -3,24 +3,27 @@ package com.example.jimmy.debugtools;
 import android.content.ContentValues;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
-import android.support.annotation.StringRes;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.content.res.ResourcesCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.jimmy.debugtools.database.GitHubContract;
-import com.example.jimmy.debugtools.network.GitHubService;
+import com.example.jimmy.debugtools.module.FocusModule;
 import com.example.jimmy.debugtools.network.Repo;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
+import io.palaima.debugdrawer.DebugDrawer;
+import io.palaima.debugdrawer.commons.BuildModule;
+import io.palaima.debugdrawer.commons.DeviceModule;
+import io.palaima.debugdrawer.commons.NetworkModule;
+import io.palaima.debugdrawer.commons.SettingsModule;
+import io.palaima.debugdrawer.location.LocationModule;
+import io.palaima.debugdrawer.okhttp3.OkHttp3Module;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -31,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
   private Button createDatabaseButton;
   private Button createSharedPrefButton;
   private Button createNetworkCallButton;
+  private DebugDrawer debugDrawer;
+
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +46,56 @@ public class MainActivity extends AppCompatActivity {
     createSharedPrefButton = (Button) findViewById(R.id.create_shared_preference_button);
     createNetworkCallButton = (Button) findViewById(R.id.create_network_button);
     addOnClickListeners();
+
+    setDebugDrawer();
   }
 
+  /**
+   * Debug Drawer example starts
+   */
+  private void setDebugDrawer() {
+    debugDrawer = new DebugDrawer.Builder(this)
+      .modules(
+        new BuildModule(this),
+        new DeviceModule(this),
+        new SettingsModule(this),
+        new NetworkModule(this),
+        new LocationModule(this),
+        new FocusModule(this)
+      ).build();
+  }
+
+  @Override
+  protected void onStart() {
+    super.onStart();
+    debugDrawer.onStart();
+  }
+
+  @Override
+  protected void onResume() {
+    super.onResume();
+    debugDrawer.onResume();
+  }
+
+  @Override
+  protected void onPause() {
+    super.onPause();
+    debugDrawer.onPause();
+  }
+
+  @Override
+  protected void onStop() {
+    super.onStop();
+    debugDrawer.onStop();
+  }
+  /**
+   * Debug Drawer example ends
+   */
+
+
+  /**
+   * Stetho Examples Starts
+   */
   private void addOnClickListeners() {
     createNetworkCallButton.setOnClickListener(new View.OnClickListener() {
       @Override
@@ -100,4 +153,7 @@ public class MainActivity extends AppCompatActivity {
   private String getRandomName() {
     return UUID.randomUUID().toString();
   }
+  /**
+   * Stetho example ends
+   */
 }

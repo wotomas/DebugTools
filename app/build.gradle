@@ -5,7 +5,7 @@ android {
     buildToolsVersion "25.0.2"
     defaultConfig {
         applicationId "com.example.jimmy.debugtools"
-        minSdkVersion 14
+        minSdkVersion 16
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
@@ -27,8 +27,18 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.1.0'
     testCompile 'junit:junit:4.12'
 
+    // Stetho Demo
     compile 'com.facebook.stetho:stetho:1.4.2'
     compile 'com.facebook.stetho:stetho-okhttp3:1.4.2'
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
+
+    // Debug Drawer Demo
+    debugCompile 'io.palaima.debugdrawer:debugdrawer:0.7.0'
+    releaseCompile 'io.palaima.debugdrawer:debugdrawer-no-op:0.7.0'
+    compile 'io.palaima.debugdrawer:debugdrawer-commons:0.7.0'
+    compile 'io.palaima.debugdrawer:debugdrawer-okhttp3:0.7.0'
+    compile 'io.palaima.debugdrawer:debugdrawer-location:0.7.0'
+
+    compile 'com.google.android.gms:play-services:10.0.1'
 }
