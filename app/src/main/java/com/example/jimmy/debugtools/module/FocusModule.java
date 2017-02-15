@@ -66,7 +66,6 @@ public class FocusModule implements DebugModule {
           Toast.makeText(activity, "Focus View Not Found", Toast.LENGTH_LONG).show();
           Log.d("DebugModule", "Focus View Not Found");
         }
-
       }
     });
 

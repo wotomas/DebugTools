@@ -3,6 +3,7 @@ package com.example.jimmy.debugtools;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.StrictMode;
 
 import com.example.jimmy.debugtools.database.GitHubDbHelper;
 import com.example.jimmy.debugtools.network.GitHubService;
@@ -26,7 +27,10 @@ public class DebugApplication extends Application {
   public void onCreate() {
     super.onCreate();
 
+
+
     if(BuildConfig.DEBUG) {
+      StrictMode.enableDefaults();
       Stetho.initializeWithDefaults(this);
     }
 
