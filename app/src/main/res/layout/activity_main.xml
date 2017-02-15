@@ -22,7 +22,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/create_database_button"
-                android:text="Create Database Button"/>
+                android:text="Create Database Button"
+                style="@style/Base.Widget.AppCompat.Button"/>
 
             <Button
                 android:layout_width="match_parent"
@@ -35,6 +36,12 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/create_network_button"
                 android:text="Create Network Call"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="2"
+                tools:text="Put random words here to check focus"/>
         </LinearLayout>
     </ScrollView>
 </FrameLayout>

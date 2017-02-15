@@ -28,6 +28,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.support.v4.widget.DrawerLayout.LOCK_MODE_LOCKED_CLOSED;
+import static android.support.v4.widget.DrawerLayout.LOCK_MODE_UNLOCKED;
+
 public class MainActivity extends AppCompatActivity {
   private static final String TAG = "MainActivity";
 
@@ -61,9 +64,31 @@ public class MainActivity extends AppCompatActivity {
         new SettingsModule(this),
         new NetworkModule(this),
         new LocationModule(this),
-        new FocusModule(this)
+        new FocusModule(this, new FocusRequestListener() {
+          @Override
+          public void closeDrawer() {
+            if (debugDrawer != null && debugDrawer.isDrawerOpen()) {
+              debugDrawer.closeDrawer();
+              debugDrawer.setDrawerLockMode(LOCK_MODE_LOCKED_CLOSED);
+            }
+          }
+
+          @Override
+          public void showDrawer() {
+            if (debugDrawer != null && !debugDrawer.isDrawerOpen()) {
+              debugDrawer.setDrawerLockMode(LOCK_MODE_UNLOCKED);
+              debugDrawer.openDrawer();
+            }
+          }
+        })
       ).build();
   }
+
+  public interface FocusRequestListener {
+    void closeDrawer();
+    void showDrawer();
+  }
+
 
   @Override
   protected void onStart() {
