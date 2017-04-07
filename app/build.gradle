@@ -48,4 +48,11 @@ dependencies {
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
     testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+
+    // Tiny Dancer Demo
+    debugCompile "com.github.brianPlummer:tinydancer:0.1.1"
+    releaseCompile "com.github.brianPlummer:tinydancer-noop:0.1.1"
+    testCompile "com.github.brianPlummer:tinydancer-noop:0.1.1"
+
+
 }

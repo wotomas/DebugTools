@@ -6,12 +6,16 @@ import android.content.SharedPreferences;
 import android.os.StrictMode;
 import android.support.multidex.MultiDexApplication;
 
+import com.codemonkeylabs.fpslibrary.FrameDataCallback;
+import com.codemonkeylabs.fpslibrary.TinyDancer;
 import com.example.jimmy.debugtools.database.GitHubDbHelper;
 import com.example.jimmy.debugtools.network.GitHubService;
 import com.facebook.stetho.Stetho;
 import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
+
+import java.util.Timer;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
@@ -25,6 +29,7 @@ public class DebugApplication extends MultiDexApplication {
   private static GitHubService service;
   private static GitHubDbHelper dbHelper;
   private static SharedPreferences sharedPreferences;
+  private Timer timer;
   private RefWatcher refWatcher;
 
   @Override
@@ -47,6 +52,18 @@ public class DebugApplication extends MultiDexApplication {
         .addConverterFactory(GsonConverterFactory.create())
         .client(stethoInterceptingClient)
         .build();
+
+      TinyDancer.create()
+          .addFrameDataCallback(new FrameDataCallback() {
+            @Override
+            public void doFrame(long previousFrameNS
+                , long currentFrameNS
+                , int droppedFrames) {
+              // do logging or pref profiling here
+
+            }
+          })
+          .show(this);
     } else {
       githubRetrofit = new Retrofit.Builder()
         .baseUrl("https://api.github.com/")

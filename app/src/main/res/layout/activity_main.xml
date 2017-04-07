@@ -43,6 +43,13 @@
                 android:id="@+id/leak_memory_button"
                 android:text="Leak Memory"/>
 
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/drop_fps_button"
+                android:text="Drop FPS"/>
+
+
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

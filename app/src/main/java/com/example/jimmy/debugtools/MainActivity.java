@@ -18,6 +18,8 @@ import com.example.jimmy.debugtools.network.Repo;
 import com.example.jimmy.debugtools.view.LeakActivity;
 
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.UUID;
 
 import io.palaima.debugdrawer.DebugDrawer;
@@ -41,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
   private Button createSharedPrefButton;
   private Button createNetworkCallButton;
   private Button createActivityLeakButton;
+  private Button createDropFPSButton;
+  private Timer timer;
   private DebugDrawer debugDrawer;
 
 
@@ -53,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
     createSharedPrefButton = (Button) findViewById(R.id.create_shared_preference_button);
     createNetworkCallButton = (Button) findViewById(R.id.create_network_button);
     createActivityLeakButton = (Button) findViewById(R.id.leak_memory_button);
+    createDropFPSButton = (Button) findViewById(R.id.drop_fps_button);
     addOnClickListeners();
 
     setDebugDrawer();
@@ -127,6 +132,35 @@ public class MainActivity extends AppCompatActivity {
    * Stetho Examples Starts
    */
   private void addOnClickListeners() {
+    createDropFPSButton.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        if (createDropFPSButton.getText().equals("Drop FPS")) {
+          createDropFPSButton.setText("Normalize FPS");
+          timer = new Timer();
+          timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+              MainActivity.this.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                  try {
+                    Thread.sleep(1);
+                  } catch (InterruptedException e) {
+                    e.printStackTrace();
+                  }
+                }
+              });
+            }
+          }, 100, 2);
+        } else {
+          createDropFPSButton.setText("Drop FPS");
+          timer.cancel();
+          timer.purge();
+        }
+      }
+    });
+
     createActivityLeakButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
@@ -134,6 +168,7 @@ public class MainActivity extends AppCompatActivity {
         startActivityForResult(leakActivityIntent, RESULT_CANCELED);
       }
     });
+
     createNetworkCallButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
