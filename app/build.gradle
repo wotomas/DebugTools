@@ -54,5 +54,9 @@ dependencies {
     releaseCompile "com.github.brianPlummer:tinydancer-noop:0.1.1"
     testCompile "com.github.brianPlummer:tinydancer-noop:0.1.1"
 
+    // Chuck Demo
+    debugCompile 'com.readystatesoftware.chuck:library:1.0.4'
+    releaseCompile 'com.readystatesoftware.chuck:library-no-op:1.0.4'
+
 
 }

@@ -12,6 +12,7 @@ import com.example.jimmy.debugtools.database.GitHubDbHelper;
 import com.example.jimmy.debugtools.network.GitHubService;
 import com.facebook.stetho.Stetho;
 import com.facebook.stetho.okhttp3.StethoInterceptor;
+import com.readystatesoftware.chuck.ChuckInterceptor;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 
@@ -45,6 +46,7 @@ public class DebugApplication extends MultiDexApplication {
 
       stethoInterceptingClient = new OkHttpClient.Builder()
         .addNetworkInterceptor(new StethoInterceptor())
+        .addInterceptor(new ChuckInterceptor(this))
         .build();
 
       githubRetrofit = new Retrofit.Builder()
