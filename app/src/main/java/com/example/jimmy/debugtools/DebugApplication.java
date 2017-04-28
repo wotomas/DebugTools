@@ -45,8 +45,8 @@ public class DebugApplication extends MultiDexApplication {
       Stetho.initializeWithDefaults(this);
 
       stethoInterceptingClient = new OkHttpClient.Builder()
-        .addNetworkInterceptor(new StethoInterceptor())
-        .addInterceptor(new ChuckInterceptor(this))
+          .addInterceptor(new ChuckInterceptor(this))
+          .addNetworkInterceptor(new StethoInterceptor())
         .build();
 
       githubRetrofit = new Retrofit.Builder()
